@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	
+	 xmlns:mvc="http://www.springframework.org/schema/mvc"    
+    xmlns:context="http://www.springframework.org/schema/context"    
+    xmlns:util="http://www.springframework.org/schema/util"    
+    
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	  http://www.springframework.org/schema/context 
+	  http://www.springframework.org/schema/context/spring-context-3.1.xsd    
+            http://www.springframework.org/schema/mvc 
+            http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd    
+            http://www.springframework.org/schema/util 
+            http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+	
+	<!--Spring扫描oz.web下的所有类，以完成bean的创建 及 自动依赖注入bean  -->
+	<context:component-scan base-package="web"/>
+	
+	
+	<mvc:annotation-driven/><!-- spring3.0新注解的支持 -->
+	
+	
+	
+	
+	<!-- 启动springmvc的注解功能 完成请求和注解pojo的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+			
+			<property name="cacheSeconds" value="0" />
+			<property name="messageConverters">
+				<list>
+						<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>				
+				</list>
+			</property>
+	
+	</bean>
+	
+	<!-- 返回视图处理类 -->
+	
+	<!-- jsp配置 -->
+	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"/>
+		<property name="suffix" value=".jsp"></property>
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+		使用jstl需配置此属性
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	</bean> -->
+	
+	
+	<!-- FreeMarker 整合配置 -->
+	<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver"
+	>
+	  	<property name="order" value="5" /> 
+        <property name="suffix" value=".ftl" /> 
+        <property name="contentType" value="text/html;charset=UTF-8" />
+	</bean>
+	<bean id="freemarkerConfig" 
+	class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+	<property name="templateLoaderPath" value="/view/"/>
+<!-- 	 <property name="templateLoaderPath" value="/"/>  -->
+	<property name="freemarkerSettings">
+		<props>
+			<prop key="template_update_delay">0</prop>
+			<prop key="default_encoding">UTF-8</prop>
+			<prop key="number_format">0.##########</prop>
+			<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+			<prop key="classic_compatible">true</prop>
+			<prop key="template_exception_handler">ignore</prop>
+		</props>
+	</property>
+	</bean>
+	
+	<!-- 文件上传配置  -->
+	<bean id="multipartResolver" 
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+	>
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxInMemorySize" value="10240" />
+		<property name="maxUploadSize" value="-1" />
+		<property name="uploadTempDir" value="/buff/" />
+	</bean>
+	
+	
+<!-- 	<mvc:interceptors>
+		<bean  class="oz.web.interceptor.TestInterceptor"/>
+		<mvc:interceptor>
+			<mvc:mapping path="/test/interceptor.do"/>
+			<bean class="oz.web.interceptor.Test2Interceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	
+	
+	
+	
+	
+	
+	
+	
+</beans>
