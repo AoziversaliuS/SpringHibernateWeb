@@ -4,6 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
 	
+	 xmlns:aop="http://www.springframework.org/schema/aop"
 	 xmlns:mvc="http://www.springframework.org/schema/mvc"    
     xmlns:context="http://www.springframework.org/schema/context"    
     xmlns:util="http://www.springframework.org/schema/util"    
@@ -15,11 +16,13 @@
             http://www.springframework.org/schema/mvc 
             http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd    
             http://www.springframework.org/schema/util 
-            http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+            http://www.springframework.org/schema/util/spring-util-3.1.xsd
+             http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 	
 	<!--Spring扫描oz.web下的所有类，以完成bean的创建 及 自动依赖注入bean  -->
 	<context:component-scan base-package="web"/>
-	
+	<aop:aspectj-autoproxy/>
 	
 	<mvc:annotation-driven/><!-- spring3.0新注解的支持 -->
 	
