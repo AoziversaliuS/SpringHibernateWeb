@@ -19,5 +19,9 @@ public class PlayerDaoImpl {
 		System.out.println("PlayerDaoImplÖÐµÄ session="+session.hashCode());
 		session.save(p);
 	}
+	
+	public void adwa(){
+		
+	}
 
 }

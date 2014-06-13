@@ -44,7 +44,7 @@
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.current_session_context_class">thread</prop>
+				<prop key="hibernate.current_session_context_class" >org.springframework.orm.hibernate4.SpringSessionContext</prop>
 			</props>
 		</property>
 		<property name="packagesToScan">
@@ -54,9 +54,24 @@
 	
 	
 	<!--事务管理  -->
+	<!--事务管理  -->
 	
-	<bean id="transactionManager"
+	<bean id="txManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager" /></beans>
+	<!--若使用注解方式配置则要写上这一句话，用xml配置则不用写 
+	<tx:annotation-driven transaction-manager="transactionManager" /> -->
+	<tx:advice id="txAdvice" transaction-manager="txManager" >
+		<tx:attributes >
+				<!-- <tx:method name="get*" read-only="true"/> -->
+				<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+	<aop:pointcut id="dao" expression="execution(public * web.dao.PlayerDaoImpl.*(..))" />
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="dao"/>
+	</aop:config>
+	
+	</beans>

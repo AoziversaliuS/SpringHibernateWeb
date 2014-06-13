@@ -19,7 +19,6 @@ public class UserController {
 	@RequestMapping("/register.do")
 	public String regist(Player p){
 		System.out.println("UserController.regist()");
-		 p.setName("Aozi");
 		pdi.add(p);
 		return "success";
 	}

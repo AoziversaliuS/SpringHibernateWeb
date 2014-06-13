@@ -10,17 +10,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class PlayerAspect {
 	
-	@Resource
+//	@Resource
 	private SessionFactory sf;
 	
-	@Pointcut("execution(public * web.dao.*.*(..))")
+//	@Pointcut("execution(public * web.dao.*.*(..))")
 	public void method(){}
 	
-	@Around("method()")
+//	@Around("method()")
 	public void around(ProceedingJoinPoint pjp) throws Throwable{
 		Session session = sf.getCurrentSession();
 		session.beginTransaction();
@@ -28,5 +28,6 @@ public class PlayerAspect {
 		pjp.proceed();
 		session.getTransaction().commit();
 	}
+	
 
 }
