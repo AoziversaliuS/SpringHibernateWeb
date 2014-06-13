@@ -20,8 +20,10 @@ public class PlayerDaoImpl {
 		session.save(p);
 	}
 	
-	public void adwa(){
-		
+	public Player getPlayer(int id){
+		Session session = sf.getCurrentSession();
+//		session.save(null);
+		return (Player)session.get(Player.class, id);
 	}
 
 }
